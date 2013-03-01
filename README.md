@@ -35,9 +35,9 @@ isPalindrome("racecar"); // true
 isPalindrome("hello"); //false
 ```
 
-The function takes a word, loops through half of the list and compares it to the other half of the list. When it finds an inconsistancy it returns false, otherwise it returns true.
+The function takes a word, loops through half of the list and compares it to the other half of the list. When it finds an inconsistency it returns false, otherwise it returns true.
 
-For the most part this code looks something like C or Java, the only really weird thing is the ```!==``` which is equivilent to what you normally see ```!=```. If this were checking equality we'd use ```===``` instead of ```==```. This is a minor detail about how JavaScript handles equality, for now just accept it.
+For the most part this code looks something like C or Java, the only really weird thing is the ```!==``` which is equivalent to what you normally see ```!=```. If this were checking equality we'd use ```===``` instead of ```==```. This is a minor detail about how JavaScript handles equality, for now just accept it.
 
 Look at the first line of the function...
 
@@ -69,10 +69,10 @@ length = [1, 2, 3];
 
 This is what it means that JavaScript is _weakly-typed_. It gives no fucks about what type the actual variable is, it's always of type "var".
 
-This leads to the next feature of JavaScript. It has first-class functions. This means functions are treaded just like date. We can assign functions to variables and treat the variables like we would a function in C or Java.
+This leads to the next feature of JavaScript. It has first-class functions. This means functions are treated just like data. We can assign functions to variables and treat the variables like we would a function in C or Java.
 
 ```javascript
-var isPalindrom = function(word){
+var isPalindrome = function(word){
 	var length = word.length;
 	for(var i=0; i < length/2; i++){
 		if(word.charAt(i) !== word.charAt(length-i)){
@@ -102,7 +102,7 @@ So we're now declaring a variable called isPalindrome and setting it equal to an
 
 __Definition:__ An _anonymous function_ is any function in the form ```function(){ .. };```. You can think of these as functions without names, even though they're commonly set to a named variable.
 
-So anonymouse functions are part of why we say functions are _first-class citizens_ in JavaScript. They're treated like data and can be set into variables. The second, more useful power is that they can be passed into function just like you would any other data!
+So anonymous functions are part of why we say functions are _first-class citizens_ in JavaScript. They're treated like data and can be set into variables. The second, more useful power is that they can be passed into functions just like you would any other data!
 
 ```javascript
 var sayWorld = function(){
@@ -140,9 +140,9 @@ Note how in that last one I just declared an anonymous function right in the exe
 
 # The JavaScript Event Loop
 
-Javascript by itself can't really do all that much. The strength of JavaScript comes from its abillity to use functions that the browser gives it access to. One of those functions we will be using a lot is setTimeout. The purpose of setTimeout is to delay code from executing. We will be using it to animate things in our games.
+Javascript by itself can't really do all that much. The strength of JavaScript comes from its ability to use functions that the browser gives it access to. One of those functions we will be using a lot is setTimeout. The purpose of setTimeout is to delay code from executing. We will be using it to animate things in our games.
 
-As we discussed in the previous section, functions can be passed into other functions in JavaScript. setTimout takes two parameters, a function, and then a time in miliseconds to be delayed before that function is run.
+As we discussed in the previous section, functions can be passed into other functions in JavaScript. setTimout takes two parameters, a function, and then a time in milliseconds to be delayed before that function is run.
 
 ```javascript
 setTimeout(function(){
@@ -159,11 +159,11 @@ setTimeout(function(){
 console.log("world");
 ```
 
-If setTimeout worked like sleep, this would log "hello" and then "world". __But it doesn't.__ Instead is logs "world" _and then_ "hello".
+If setTimeout worked like sleep, this would log "hello" and then "world". __But it doesn't.__ Instead it logs "world" _and then_ "hello".
 
 JavaScript was made as an event driven language. When something happens in the browser, some code should run. "Something happens in the browser" could be a form submission, or a keystroke, or even just a certain amount of time passing. As a programmer, we don't want to be responsible for constantly checking the time or button presses, so instead, in the background, JavaScript runs a loop constantly checking for new events that get queued up by the browser.
 
-setTimeout is our way of telling the browser to simulate one of these events after a period of time. Whenever we create one of these _event listeners_ we write an anonymouse function called a _callback_ that gets called once the event happens.
+setTimeout is our way of telling the browser to simulate one of these events after a period of time. Whenever we create one of these _event listeners_ we write an anonymous function called a _callback_ that gets called once the event happens.
 
 Lets look at some examples:
 
@@ -174,7 +174,7 @@ setTimeout(function(){
 console.log("hello");
 ```
 
-This is the correct version of our function from before. It will say "hello" imediately and then five seconds later say "world".
+This is the correct version of our function from before. It will say "hello" immediately and then five seconds later say "world".
 
 Imagine we wanted to say "hello" after five seconds and then "world" five seconds after that. An incorrect way to do this would be...
 
@@ -187,7 +187,7 @@ setTimeout(function(){
 }, 5000);
 ```
 
-This _wont_ display the messages five seconds appart. Instead both messages will display at the same time after five seconds. This is because we set the setTimeouts at the same time.
+This _won't_ display the messages five seconds apart. Instead both messages will display at the same time after five seconds. This is because we set the setTimeouts at the same time.
 
 One possible solution is to tell our browser to just run the first setTimeout (hello) after five seconds, and our second setTimeout (world) after ten seconds.
 
@@ -202,9 +202,9 @@ setTimeout(function(){
 
 This works... sometimes. Unfortunately the browser can't guarantee that it will call our code after the exact number of milliseconds we want since it also needs to handle browser things like loading tabs, pages, and executing other JavaScript. If it's really busy it might take more than ten seconds to realize how much time has passed and run them at the same time. The adding method is also subjectable to the programmers bad math errors.
 
-The idea of one thing coming after the other maters to us because this is how we're going to animate things in our games.
+The idea of one thing coming after the other matters to us because this is how we're going to animate things in our games.
 
-The better way to do this is to set our setTimeout for "hello" first, and then in the anonymous function where we're saying "hello" we imideately after set a second seTimeout for five seconds later.
+The better way to do this is to set our setTimeout for "hello" first, and then in the anonymous function where we're saying "hello" we immediately after set a second setTimeout for five seconds later.
 
 ```javascript
 setTimeout(function(){
