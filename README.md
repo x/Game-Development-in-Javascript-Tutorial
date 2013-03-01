@@ -137,6 +137,7 @@ runFuns(sayHello, function(){
 
 Note how in that last one I just declared an anonymous function right in the execution of the runFuns function.
 
+
 # The JavaScript Event Loop
 
 Javascript by itself can't really do all that much. The strength of JavaScript comes from its abillity to use functions that the browser gives it access to. One of those functions we will be using a lot is setTimeout. The purpose of setTimeout is to delay code from executing. We will be using it to animate things in our games.
@@ -248,3 +249,17 @@ while(true){};
 ```
 
 The browser will be told "in five seconds run this function that says world", and in five seconds the browser will put that function call into a queue that the event loop is constantly checking. But imediately after we say "hello" we've started a while(true) loop that will never end and thus never let the current bit of code finish. Until this code finishes running, the event loop will never check the queue and our ```console.log("world")``` will never run.
+
+
+# The Canvas
+
+JavaScript is what we'll be writing our code in, but it's only one peice of the puzzle. We're going to need a screen to write to. In HTML5 we have something awesome called Canvas. You can think of it as an image just like any other image on the web except that you can draw on it using JavaScript and the tools in the HTML5 API that your browser gives you.
+
+In order to start off, create a simple html document with just our javascript and our canvas in it. I'm calling my html index.html and my javascript, in the same directory, animate.js. Give the canvas element an id of "screen" so we can easily grab it in our javascript and a size of 240x160.
+
+```html index.html
+<html>
+	<canvas id="screen" width="240" height="160"></canvas>
+	<script src="animate.js"></script>
+</html>
+```
