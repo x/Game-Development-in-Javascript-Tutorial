@@ -6,7 +6,7 @@ Being lightweight means that JavaScript is a small language. Dynamic means that 
 
 The easiest way to start with Javascript is to create a blank HTML page, write your code in a .js file, and then require the file in a script tag on the blank page. Your errors and output that we'll discuss in the next two sections will go to your browsers developer console.
 
-```html blankpage.html
+```html
 <html>
 	<script src="__PATH_TO_JAVASCRIPT_FILE_HERE__"></script>
 </html>
@@ -257,7 +257,7 @@ JavaScript is what we'll be writing our code in, but it's only one peice of the 
 
 In order to start off, create a simple html document with just our javascript and our canvas in it. I'm calling my html index.html and my javascript, in the same directory, animate.js. Give the canvas element an id of "screen" so we can easily grab it in our javascript and a size of 240x160.
 
-```html index.html
+```html
 <html>
 	<canvas id="screen" width="240" height="160"></canvas>
 	<script src="animate.js"></script>
