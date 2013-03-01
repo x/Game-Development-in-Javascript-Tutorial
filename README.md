@@ -158,7 +158,7 @@ setTimeout(function(){
 console.log("world");
 ```
 
-If setTimeout worked like sleep, this would log "hello" and then "world". __But it doesn't.__ Instead is logs "world" __and then__ "hello".
+If setTimeout worked like sleep, this would log "hello" and then "world". __But it doesn't.__ Instead is logs "world" _and then_ "hello".
 
 JavaScript was made as an event driven language. When something happens in the browser, some code should run. "Something happens in the browser" could be a form submission, or a keystroke, or even just a certain amount of time passing. As a programmer, we don't want to be responsible for constantly checking the time or button presses, so instead, in the background, JavaScript runs a loop constantly checking for new events that get queued up by the browser.
 
