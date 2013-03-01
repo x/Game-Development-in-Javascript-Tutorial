@@ -188,7 +188,7 @@ setTimeout(function(){
 
 This _wont_ display the messages five seconds appart. Instead both messages will display at the same time after five seconds. This is because we set the setTimeouts at the same time.
 
-One possible solution is to tell our browser to just run the first setTimeout (_hello_) after five seconds, and our second setTimeout (_world_) after ten seconds.
+One possible solution is to tell our browser to just run the first setTimeout (hello) after five seconds, and our second setTimeout (world) after ten seconds.
 
 ```javascript
 setTimeout(function(){
