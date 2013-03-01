@@ -67,9 +67,11 @@ length = "hello";
 length = [1, 2, 3];
 ```
 
-This is what it means that JavaScript is _weakly-typed_. It gives no fucks about what type the actual variable is, it's always of type "var".
+Javascript is _dynamically typed_. This means that we don't have to specify the
+type of a variable when we declare it exists, and we can assign values of any
+type to any variable. 
 
-This leads to the next feature of JavaScript. It has first-class functions. This means functions are treated just like data. We can assign functions to variables and treat the variables like we would a function in C or Java.
+This leads to the next feature of JavaScript. It has first-class functions. This means functions are treated just like data. We can assign functions to variables and treat the variables like we would a variable in C or Java.
 
 ```javascript
 var isPalindrome = function(word){
@@ -100,7 +102,7 @@ var isPalindrome = function(word){ ... };
 
 So we're now declaring a variable called isPalindrome and setting it equal to an _anonymous function_.
 
-__Definition:__ An _anonymous function_ is any function in the form ```function(){ .. };```. You can think of these as functions without names, even though they're commonly set to a named variable.
+__Definition:__ An _anonymous function_ is any function in the form ```function(){ .. };```. You can think of these as functions without names, even though they're commonly set to a named variable. 
 
 So anonymous functions are part of why we say functions are _first-class citizens_ in JavaScript. They're treated like data and can be set into variables. The second, more useful power is that they can be passed into functions just like you would any other data!
 
@@ -140,9 +142,9 @@ Note how in that last one I just declared an anonymous function right in the exe
 
 # The JavaScript Event Loop
 
-Javascript by itself can't really do all that much. The strength of JavaScript comes from its ability to use functions that the browser gives it access to. One of those functions we will be using a lot is setTimeout. The purpose of setTimeout is to delay code from executing. We will be using it to animate things in our games.
+Javascript by itself can't really do all that much. The strength of JavaScript comes from its ability to use functions that the browser gives it access to. One of those functions we will be using a lot is `setTimeout`. The purpose of `setTimeout` is to delay code from executing. We will be using it to animate things in our games.
 
-As we discussed in the previous section, functions can be passed into other functions in JavaScript. setTimout takes two parameters, a function, and then a time in milliseconds to be delayed before that function is run.
+As we discussed in the previous section, functions can be passed into other functions in JavaScript. `setTimeout` takes two parameters, a function, and then a time in milliseconds to be delayed before that function is run.
 
 ```javascript
 setTimeout(function(){
@@ -150,7 +152,7 @@ setTimeout(function(){
 }, 5000);
 ```
 
-If we run this we see that setTimeout delays "hello world" from being printed for five seconds. You might think this is like the sleep function in C, but it's not. This is where things get crazy.
+If we run this we see that `setTimeout` delays "hello world" from being printed for five seconds. You might think this is like the sleep function in C, but it's not. This is where things get crazy.
 
 ```javascript
 setTimeout(function(){
@@ -159,11 +161,11 @@ setTimeout(function(){
 console.log("world");
 ```
 
-If setTimeout worked like sleep, this would log "hello" and then "world". __But it doesn't.__ Instead it logs "world" _and then_ "hello".
+If `setTimeout` worked like sleep, this would log "hello" and then "world". __But it doesn't.__ Instead it logs "world" _and then_ "hello".
 
 JavaScript was made as an event driven language. When something happens in the browser, some code should run. "Something happens in the browser" could be a form submission, or a keystroke, or even just a certain amount of time passing. As a programmer, we don't want to be responsible for constantly checking the time or button presses, so instead, in the background, JavaScript runs a loop constantly checking for new events that get queued up by the browser.
 
-setTimeout is our way of telling the browser to simulate one of these events after a period of time. Whenever we create one of these _event listeners_ we write an anonymous function called a _callback_ that gets called once the event happens.
+`setTimeout` is our way of telling the browser to simulate one of these events after a period of time. Whenever we create one of these _event listeners_ we write an anonymous function called a _callback_ that gets called once the event happens.
 
 Lets look at some examples:
 
@@ -187,9 +189,9 @@ setTimeout(function(){
 }, 5000);
 ```
 
-This _won't_ display the messages five seconds apart. Instead both messages will display at the same time after five seconds. This is because we set the setTimeouts at the same time.
+This _won't_ display the messages five seconds apart. Instead both messages will display at the same time after five seconds. This is because we set the `setTimeout`s at the same time.
 
-One possible solution is to tell our browser to just run the first setTimeout (hello) after five seconds, and our second setTimeout (world) after ten seconds.
+One possible solution is to tell our browser to just run the first `setTimeout` (hello) after five seconds, and our second `setTimeout` (world) after ten seconds.
 
 ```javascript
 setTimeout(function(){
@@ -200,11 +202,11 @@ setTimeout(function(){
 }, 10000);
 ```
 
-This works... sometimes. Unfortunately the browser can't guarantee that it will call our code after the exact number of milliseconds we want since it also needs to handle browser things like loading tabs, pages, and executing other JavaScript. If it's really busy it might take more than ten seconds to realize how much time has passed and run them at the same time. The adding method is also subjectable to the programmers bad math errors.
+This works... most of the time. Unfortunately the browser can't guarantee that it will call our code after the exact number of milliseconds we want since it also needs to handle browser things like loading tabs, pages, and executing other JavaScript. If it's really busy it might take more than ten seconds to realize how much time has passed and run them at the same time. The adding method is also subjectable to the programmers bad math errors.
 
 The idea of one thing coming after the other matters to us because this is how we're going to animate things in our games.
 
-The better way to do this is to set our setTimeout for "hello" first, and then in the anonymous function where we're saying "hello" we immediately after set a second setTimeout for five seconds later.
+The better way to do this is to set our `setTimeout` for "hello" first, and then in the anonymous function where we're saying "hello" we immediately after set a second `setTimeout` for five seconds later.
 
 ```javascript
 setTimeout(function(){
@@ -248,7 +250,7 @@ console.log("hello");
 while(true){};
 ```
 
-The browser will be told "in five seconds run this function that says world", and in five seconds the browser will put that function call into a queue that the event loop is constantly checking. But imediately after we say "hello" we've started a while(true) loop that will never end and thus never let the current bit of code finish. Until this code finishes running, the event loop will never check the queue and our ```console.log("world")``` will never run.
+The browser will be told "in five seconds run this function that says world", and in five seconds the browser will put that function call into a queue that the event loop is constantly checking. But imediately after we say "hello" we've started a `while(true)` loop that will never end and thus never let the current bit of code finish. Until this code finishes running, the event loop will never check the queue and our ```console.log("world")``` will never run.
 
 
 # The Canvas
