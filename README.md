@@ -1,14 +1,22 @@
 # Intro to JavaScript
 
-JavaScript is a lightweight, dynamic, weakly typed language. It features prototype-based objects, first-class functions, and asynchronous events.
+JavaScript is a _lightweight_, _dynamic_, _weakly-typed_ language. It features _prototype-based objects_, _first-class functions_, and _asynchronous event handling_.
 
-Being lightweight means that JavaScript is a small language. Dynamic means that instead of compiling down to machine code, its interpreted line by line at runtime. This means that if there is a syntax error half way through a program, all the code before the error will run, and then the program will fail.
+Being lightweight means that JavaScript is a small language. Dynamic means that instead of compiling down to machine code, it's interpreted line by line at runtime. This means that if there is a syntax error half way through a program, then all the code before the error will run, and then the program will fail at the line where the error is.
+
+The easiest way to start with Javascript is to create a blank HTML page, write your code in a .js file, and then require the file in a script tag on the blank page. Your errors and output that we'll discuss in the next two sections will go to your browsers developer console.
+
+```html blankpage.html
+<html>
+	<script src="__PATH_TO_JAVASCRIPT_FILE_HERE__"></script>
+</html>
+```
 
 Here's an example of Hello World in JavaScript.
 ```javascript
 console.log("Hello world.");
 ```
-Note that theres no main function, the code starts being interpreted at the top of the file and just runs. ```console.log``` is actually not part of Javascript, but since Javascript runs in a browser it doesn't have stdin and stdout, it instead uses the console object provided by the browser and writes to the browsers debugging console.
+Note that there's no main function, the code starts being interpreted at the top of the file and just runs. ```console.log``` is actually not part of Javascript, but since Javascript runs in a browser it doesn't have stdin and stdout, it instead uses the console object provided by the browser and writes to the browsers developer console.
 
 Here's an example of a function you probably recognize, isPalindrome, written in JavaScript. 
 
@@ -29,13 +37,15 @@ isPalindrome("hello"); //false
 
 The function takes a word, loops through half of the list and compares it to the other half of the list. When it finds an inconsistancy it returns false, otherwise it returns true.
 
-Look at the first line of the function
+For the most part this code looks something like C or Java, the only really weird thing is the ```!==``` which is equivilent to what you normally see ```!=```. If this were checking equality we'd use ```===``` instead of ```==```. This is a minor detail about how JavaScript handles equality, for now just accept it.
+
+Look at the first line of the function...
 
 ```javascript
 var length = word.length;
 ```
 
-word.length clearly returns a number, but we declare length not as an int, but as a var, as in variable.
+```word.length``` clearly returns a number, but instead of declaring length as an int we declared it as a var (as in variable).
 
 If we declared length to be a String it would look like this,
 
@@ -57,9 +67,9 @@ length = "hello";
 length = [1, 2, 3];
 ```
 
-This is what it means that JavaScript is weakly-typed. It gives no fucks about what type the actual variable is, it's always of type "var".
+This is what it means that JavaScript is _weakly-typed_. It gives no fucks about what type the actual variable is, it's always of type "var".
 
-This leads to the next feature of JavaScript. It has first-class functions. This means we can assign functions to variables and treat them like variables.
+This leads to the next feature of JavaScript. It has first-class functions. This means functions are treaded just like date. We can assign functions to variables and treat the variables like we would a function in C or Java.
 
 ```javascript
 var isPalindrom = function(word){
@@ -72,8 +82,8 @@ var isPalindrom = function(word){
 	return true;
 };
 
-isPalindrome("racecar"); // => true
-isPalindrome("hello"); // => false
+isPalindrome("racecar");
+isPalindrome("hello");
 ```
 
 Note how in this implementation, instead of saying 
@@ -88,7 +98,7 @@ we say
 var isPalindrome = function(word){ ... };
 ```
 
-We're now declaring a variable called isPalindrome and setting it equal to an _anonymous function_.
+So we're now declaring a variable called isPalindrome and setting it equal to an _anonymous function_.
 
 __Definition:__ An _anonymous function_ is any function in the form ```function(){ .. };```. You can think of these as functions without names, even though they're commonly set to a named variable.
 
@@ -129,7 +139,7 @@ Note how in that last one I just declared an anonymous function right in the exe
 
 # The JavaScript Event Loop
 
-Javascript by itself can't really do all that much. The strength of JavaScript comes from its abillity to use functions tha the browser gives it access to. One of those functions we will be using a lot is setTimeout. The purpose of setTimeout is to delay code from executing.
+Javascript by itself can't really do all that much. The strength of JavaScript comes from its abillity to use functions that the browser gives it access to. One of those functions we will be using a lot is setTimeout. The purpose of setTimeout is to delay code from executing. We will be using it to animate things in our games.
 
 As we discussed in the previous section, functions can be passed into other functions in JavaScript. setTimout takes two parameters, a function, and then a time in miliseconds to be delayed before that function is run.
 
@@ -238,5 +248,3 @@ while(true){};
 ```
 
 The browser will be told "in five seconds run this function that says world", and in five seconds the browser will put that function call into a queue that the event loop is constantly checking. But imediately after we say "hello" we've started a while(true) loop that will never end and thus never let the current bit of code finish. Until this code finishes running, the event loop will never check the queue and our ```console.log("world")``` will never run.
-
-
