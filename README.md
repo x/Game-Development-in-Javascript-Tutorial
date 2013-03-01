@@ -1,3 +1,5 @@
+# Part One: JavaScript, Canvas, and Basic Animation
+
 # Intro to JavaScript
 
 JavaScript is a _lightweight_, _dynamic_, _weakly-typed_ language. It features _prototype-based objects_, _first-class functions_, and _asynchronous event handling_.
@@ -250,8 +252,7 @@ console.log("hello");
 while(true){};
 ```
 
-The browser will be told "in five seconds run this function that says world", and in five seconds the browser will put that function call into a queue that the event loop is constantly checking. But imediately after we say "hello" we've started a `while(true)` loop that will never end and thus never let the current bit of code finish. Until this code finishes running, the event loop will never check the queue and our ```console.log("world")``` will never run.
-
+The browser will be told "in five seconds run this function that says world", and in five seconds the browser will put that function call into a queue that the event loop is constantly checking. But immediately after we say "hello" we've started a `while(true)` loop that will never end and thus never let the current bit of code finish. Until this code finishes running, the event loop will never check the queue and our ```console.log("world")``` will never run.
 
 # The Canvas
 
@@ -264,4 +265,32 @@ In order to start off, create a simple html document with just our javascript an
 	<canvas id="screen" width="240" height="160"></canvas>
 	<script src="animate.js"></script>
 </html>
+```
+
+In our JavaScript file the first thing we'll have to do is grab the canvas element. The canvas element is a drawing surface that exposes one or more _rendering contexts_ which are defined in some dimension and allow us to draw in the element. We're going to focus on the 2D rendering context, but there are experimental implementations of the 3D context based on OpenGL.
+
+```javascript
+var canvas = document.getElementById('screen');
+var ctx = canvas.getContext('2d');
+```
+
+Whats returned by getContext is a context object. This object is filled with functions that we can use for drawing. All of these methods take (x,y) coordinates defined with (0,0) in the top-left corner, positive-y going down, and positive-x going to the right. The units are measured in "pixles" that are defined by the context. Lets draw a rectangle.
+
+First lets define a fill-style, the rules governing things like the color of what ever we're going to draw. Lets make the fill-style red.
+
+```javascript
+ctx.fillStyle = "rgb(200, 0, 0)";
+```
+
+Now lets draw a red-filled rectangle at the position (20, 20) thats 50 pixles tall and 75 pixles wide.
+
+```javascript
+ctx.fillRect(20, 20, 75, 50);
+```
+
+We could also draw another rectangle, but this time lets make it blue and little translucent using the rgba definition of color.
+
+```javascript
+ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+ctx.fillRect(40, 40, 50, 50);
 ```
