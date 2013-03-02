@@ -1,6 +1,6 @@
 # Part One: JavaScript, Canvas, and Basic Animation
 
-# Intro to JavaScript
+## Intro to JavaScript
 
 JavaScript is a _lightweight_, _dynamic_, _weakly-typed_ language. It features _prototype-based objects_, _first-class functions_, and _asynchronous event handling_.
 
@@ -25,7 +25,7 @@ Here's an example of a function you probably recognize, isPalindrome, written in
 ```javascript
 function isPalindrom(word){
 	var length = word.length;
-	for(var i=0; i < length/2; i++){
+	for(var i=0; i <= length/2; i++){
 		if(word.charAt(i) !== word.charAt(length-i)){
 			return false;
 		}
@@ -142,7 +142,7 @@ runFuns(sayHello, function(){
 Note how in that last one I just declared an anonymous function right in the execution of the runFuns function.
 
 
-# The JavaScript Event Loop
+## The JavaScript Event Loop
 
 Javascript by itself can't really do all that much. The strength of JavaScript comes from its ability to use functions that the browser gives it access to. One of those functions we will be using a lot is `setTimeout`. The purpose of `setTimeout` is to delay code from executing. We will be using it to animate things in our games.
 
@@ -254,7 +254,7 @@ while(true){};
 
 The browser will be told "in five seconds run this function that says world", and in five seconds the browser will put that function call into a queue that the event loop is constantly checking. But immediately after we say "hello" we've started a `while(true)` loop that will never end and thus never let the current bit of code finish. Until this code finishes running, the event loop will never check the queue and our ```console.log("world")``` will never run.
 
-# The Canvas
+## The Canvas
 
 JavaScript is what we'll be writing our code in, but it's only one peice of the puzzle. We're going to need a screen to write to. In HTML5 we have something awesome called Canvas. You can think of it as an image just like any other image on the web except that you can draw on it using JavaScript and the tools in the HTML5 API that your browser gives you.
 
@@ -279,18 +279,133 @@ Whats returned by getContext is a context object. This object is filled with fun
 First lets define a fill-style, the rules governing things like the color of what ever we're going to draw. Lets make the fill-style red.
 
 ```javascript
+var canvas = document.getElementById('screen');
+var ctx = canvas.getContext('2d');
+
 ctx.fillStyle = "rgb(200, 0, 0)";
 ```
 
-Now lets draw a red-filled rectangle at the position (20, 20) thats 50 pixles tall and 75 pixles wide.
+Now lets draw a red-filled rectangle at the position (20, 20) thats 50 pixels tall and 75 pixels wide.
 
 ```javascript
+var canvas = document.getElementById('screen');
+var ctx = canvas.getContext('2d');
+
+ctx.fillStyle = "rgb(200, 0, 0)";
 ctx.fillRect(20, 20, 75, 50);
 ```
 
 We could also draw another rectangle, but this time lets make it blue and little translucent using the rgba definition of color.
 
 ```javascript
+var canvas = document.getElementById('screen');
+var ctx = canvas.getContext('2d');
+
+ctx.fillStyle = "rgb(200, 0, 0)";
+ctx.fillRect(20, 20, 75, 50);
+
 ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
 ctx.fillRect(40, 40, 50, 50);
 ```
+
+If we wanted to draw another red square after the blue square, but didn't want to manually reset the fillStyle, we can use the save and restore functions to stash rendering context's fillStyle.
+
+```javascript
+var canvas = document.getElementById('screen');
+var ctx = canvas.getContext('2d');
+
+ctx.fillStyle = "rgb(200, 0, 0)";
+ctx.fillRect(20, 20, 75, 50);
+ctx.save();
+
+ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+ctx.fillRect(40, 40, 50, 50);
+ctx.retore();
+
+ctx.fillRect(60, 60, 50, 50);
+```
+
+## Animation
+
+What's currently happening is our html file loads, our canvas is created, and then we immediately draw shapes to it using our JavaScript. We're going to take this a step further now using our knowledge of the event loop and setTimeouts.
+
+Lets first create a flashing box. We'll wait one second, draw the box, wait one second, then clear the screen. For clearing the screen we'll draw a _clearRect_ across the whole screen.
+
+```javascript
+var canvas = document.getElementById('screen');
+var ctx = canvas.getContext('2d');
+
+ctx.fillStyle = "rgb(200, 0, 0)";
+
+setTimeout(function(){
+	ctx.fillRect(20, 20, 50, 50);
+	setTimeout(function(){
+		ctx.clearRect(0, 0, 240, 160);
+	}, 1000);
+}, 1000);
+```
+It would be great to do this multiple times, we can do so pretty easily using recursion.
+
+```javascript
+var canvas = document.getElementById('screen');
+var ctx = canvas.getContext('2d');
+
+ctx.fillStyle = "rgb(200, 0, 0)";
+
+var pulseRect = function(){
+	setTimeout(function(){
+		ctx.fillRect(20, 20, 50, 50);
+		setTimeout(function(){
+			ctx.clearRect(0, 0, 240, 160);
+			pulseRect();
+		}, 1000);
+	}, 1000);
+};
+
+pulseRect();
+```
+
+Congratulations, you now have a pulsing rectangle! But we can do a lot better than this. Lets consider setTimeouts sister function, setInterval. setInterval works just like setTimeout, except setting events in the given interval. If setInterval is given a function and 5000 milliseconds, the function will be run every five seconds over and over again.
+
+Lets get rid of the recursion and clean up this code using setInterval.
+
+```javascript
+var canvas = document.getElementById('screen');
+var ctx = canvas.getContext('2d');
+
+ctx.fillStyle = "rgb(200, 0, 0)";
+
+setInterval(function(){
+	ctx.fillRect(20, 20, 50, 50);
+	setTimeout(function(){
+		ctx.clearRect(0, 0, 240, 160);
+	}, 1000);
+}, 2000);
+```
+
+setInterval is how we're going to animate things on the canvas. Our basic loop will be clear screen, change draw position, draw objects. Lets try moving a square across the screen.
+
+```javascript
+var canvas = document.getElementById('screen');
+var ctx = canvas.getContext('2d');
+
+ctx.fillStyle = "rgb(200, 0, 0)";
+
+var xLocation = 0;
+setInterval(function(){
+	ctx.clearRect(0, 0, 240, 160);
+	xLocation++;
+	ctx.fillRect(xLocation, 20, 50, 50);
+}, 100);
+```
+
+Two things are very different. First, we made the interval a lot smaller. We want our box to move a lot faster than one pixel every two seconds. Second I now have a variable called xLocation that exists outside of the anonymous function that it knows about and can update.
+
+We could take this further. We could abstract the yLocation as well, and the location change and the drawing into their own functions. But if we want multiple boxes moving in different ways this will get messy quickly. What we really need is a reusable box _class_ that we can use to create multiple box _instances_ that can maintain themselves...
+
+We've now talked about the JavaScript, how to delay code with JavaScript, Canvas, how to draw to the Canvas, and finally animation. But now we need more control of our boxes and need them to be aware of each other.
+
+
+# Part Two: Objects in JavaScript, Collision Detection, Pong
+
+_more coming next week..._
