@@ -229,10 +229,9 @@ var sayHello = function(time, cb){
 	}, time);
 }
 
-var sayWorld = function(time, cb){
+var sayWorld = function(time){
 	setTimeout(function(){
 		console.log("world");
-		cb();
 	}, time);
 }
 
