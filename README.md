@@ -23,10 +23,10 @@ Note that there's no main function, the code starts being interpreted at the top
 Here's an example of a function you probably recognize, isPalindrome, written in JavaScript. 
 
 ```javascript
-function isPalindrom(word){
+function isPalindrome(word){
 	var length = word.length;
 	for(var i=0; i <= length/2; i++){
-		if(word.charAt(i) !== word.charAt(length-i)){
+		if(word.charAt(i) !== word.charAt(length-i-1)){
 			return false;
 		}
 	}
@@ -79,7 +79,7 @@ This leads to the next feature of JavaScript. It has first-class functions. This
 var isPalindrome = function(word){
 	var length = word.length;
 	for(var i=0; i < length/2; i++){
-		if(word.charAt(i) !== word.charAt(length-i)){
+		if(word.charAt(i) !== word.charAt(length-i-1)){
 			return false;
 		}
 	}
