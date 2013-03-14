@@ -319,7 +319,7 @@ ctx.save();
 
 ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
 ctx.fillRect(40, 40, 50, 50);
-ctx.retore();
+ctx.restore();
 
 ctx.fillRect(60, 60, 50, 50);
 ```
