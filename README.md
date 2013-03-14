@@ -204,7 +204,7 @@ setTimeout(function(){
 }, 10000);
 ```
 
-This works... most of the time. Unfortunately the browser can't guarantee that it will call our code after the exact number of milliseconds we want since it also needs to handle browser things like loading tabs, pages, and executing other JavaScript. If it's really busy it might take more than ten seconds to realize how much time has passed and run them at the same time. The adding method is also subjectable to the programmers bad math errors.
+This works... most of the time. Unfortunately the browser can't guarantee that it will call our code after the exact number of milliseconds we want since it also needs to handle browser things like loading tabs, pages, and executing other JavaScript. If it's really busy it might take more than ten seconds to realize how much time has passed and run them at the same time. This strategy is also subjectable to the programmer's bad math errors.
 
 The idea of one thing coming after the other matters to us because this is how we're going to animate things in our games.
 
