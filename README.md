@@ -406,7 +406,7 @@ We've now talked about the JavaScript, how to delay code with JavaScript, Canvas
 
 # Part Two: Objects in JavaScript, Collision Detection, Pong
 
-_For this part of the lesson, delete everything in your old animate.js file and start over_
+_For this part of the lesson, delete everything in your old animate.js file and start over. If you get lost at some point, the finished code is at the bottom._
 
 ## Objects
 
@@ -429,7 +429,7 @@ Then to use the class...
 
 ```javascript
 redCar = new Car('red');
-recCar.describe();
+recCar.describe(); // alerts "this is a red car."
 ```
 
 For our pong game, we're going to create a _"class"_ for game elements. Our elements will maintain their size dimensions, positions, have a method for drawing themselves, move themselves, and, with the help of a global elements container, be able to detect collision with other elements.
@@ -470,7 +470,7 @@ var Element = function(x, y, width, height, vx, vy) {
 };
 ```
 
-The next thing we'll need to do is have a way to draw the elements. At the top of our file we'll want to keep the same instantiation of our ```canvas``` and our ```ctx```.
+The next thing we'll need to do is have a way to draw the elements. At the top of our file we'll want to keep the same instantiation of our ```canvas``` and our ```ctx``` that we had before.
 
 ```javascript
 var canvas = document.getElementById('screen');
@@ -493,10 +493,7 @@ var paddle2 = new Element(5, 65, 5, 30);
 var ball = new Element(117, 77, 6, 6);
 ```
 
-Now if we load our screen we should now see this wonder.
-
-()[http://blog.peticol.as/imgs/foo.jpg]
-
+Now if we load our screen we should just see two paddles facing eachother and not much else.
 
 ## Moving
 
@@ -754,7 +751,7 @@ window.onkeyup = function(e) {
 
 Now we have control.
 
-# Walls and resetting the ball
+## Walls and resetting the ball
 
 Now is a good time to add the walls. Ideally, you should treat walls differently from game elements, but our goal here is to be simple, so lets just add two new elements with no velocity to represent our walls.
 
@@ -791,105 +788,6 @@ var gameLoop = function() {
     ball.y = 77;
   }
 };
-```
-
-In summery, this is what our code now should look like.
-
-```javascript
-var FPS = 60;
-var PADDLE_SPEED = 100;
-var BALL_SPEED = 100;
-
-var canvas = document.getElementById('screen');
-var ctx = canvas.getContext('2d');
-
-var elements = [];
-var Element = function(x, y, width, height, vx, vy) {
-  this.x = x;
-  this.y = y;
-  this.width = width;
-  this.height = height;
-  this.vx = vx || 0;
-  this.vy = vy || 0;
-
-  elements.push(this);
-};
-Element.prototype.draw = function() {
-  ctr.fillRect(this.x, this.y, this.width, this.height);
-};
-Element.prototype.move = function() {
-  for (var i=0; i < elements.length; i++) {
-    el = elements[i];
-    if (elements[i] == this) {
-      continue;
-    }
-    
-    // bounce on horizontal collision
-    if ((this.top() < el.bottom() && this.bottom() > el.top()) &&
-        (this.right() < el.left() && this.right() + this.vx >= el.left() ||
-         this.left() > el.right() && this.left() + this.vx <= el.right())) {
-      this.vx = -this.vx;
-      break;
-    }
-    
-    // bounce on vertical collision
-    if ((this.left() < el.right() && this.right() > el.left()) &&
-        (this.bottom() < el.top() && this.bottom() + this.vy >= el.top() ||
-         this.top() > el.bottom() && this.top() + this.vy <= el.bottom())) {
-      this.vy = -this.vy;
-      break;
-    }
-  }
-  this.x += this.vx;
-  this.y += this.vy;
-};
-
-
-// instantiate moving game elements
-var paddle1 = new Element(5, 65, 5, 30);
-var paddle2 = new Element(5, 65, 5, 30);
-var ball = new Element(117, 77, 6, 6, -1 * BALL_SPEED / FPS, 0.6 * BALL_SPEED / FPS);
-
-// create top and bottom walls 
-var topWall = new Element( 0, 0, 240, 1);
-var bottomWall = new Element(0, 159, 240, 1);
-
-
-// player one controller
-window.onkeydown = function(event) {
-  // go up if the up key was pressed
-  if (event.keyCode === 38) {
-    paddle1.vy = -PADDLE_SPEED / FPS;
-  }
-
-  // go down if it was the down key was pressed
-  if (event.keyCode === 40) {
-    paddle.vy = PADDLE_SPEED / FPS;
-  }
-};
-window.onkeyup = function(e) {
-  paddle1.vy = 0;
-};
-
-
-// game loop
-var gameLoop = function() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].move();
-    elements[i].draw();
-  }
-
-  // game rules
-  if (ball.right() > canvas.width) {
-    ball.x = 117;
-    ball.y = 77;
-  } else if (ball.left() < 0) {
-    ball.x = 117;
-    ball.y = 77;
-  }
-};
-setInterval(gameLoop, 1000 / FPS);
 ```
 
 _At this point, if you wanted, you could probably figure out how to add control to the other player and have a finished pong game. But that's the easy way out. The next section will be on how to make this a fun single player._
