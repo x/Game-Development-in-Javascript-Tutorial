@@ -406,7 +406,7 @@ We've now talked about the JavaScript, how to delay code with JavaScript, Canvas
 
 # Part Two: Objects in JavaScript, Collision Detection, Pong
 
-_For this part of the lesson, delete everything in your old animate.js file and start over. If you get lost at some point, the finished code is at the bottom._
+_For this part of the lesson, delete everything in your old animate.js file and start over. It's important to leave your index file and the canvas defined with a width of 240 and a height of 160. If you get lost at some point, the finished code is at the bottom._
 
 ## Objects
 
@@ -535,7 +535,7 @@ And last but not least, add a little motion to our existing ball (remember, we h
 
 ```javascript
 var paddle1 = new Element(5, 65, 5, 30);
-var paddle2 = new Element(5, 65, 5, 30);
+var paddle2 = new Element(230, 65, 5, 30);
 var ball = new Element(117, 77, 6, 6, BALL_SPEED / FPS, 0);
 ```
 
@@ -569,7 +569,7 @@ Element.prototype.move = function() {
 };
 
 var paddle1 = new Element(5, 65, 5, 30);
-var paddle2 = new Element(5, 65, 5, 30);
+var paddle2 = new Element(230, 65, 5, 30);
 var ball = new Element(117, 77, 6, 6, BALL_SPEED / FPS, 0);
 
 var gameLoop = function() {
@@ -718,7 +718,7 @@ window.onkeydown = function() {
 
   // go down if it was the down key was pressed
   if ( ... ) {
-    paddle.vy = PADDLE_SPEED / FPS;
+    paddle1.vy = PADDLE_SPEED / FPS;
   }
 }
 ```
@@ -736,7 +736,7 @@ window.onkeydown = function(event) {
 
   // go down if it was the down key was pressed
   if (event.keyCode === 40) {
-    paddle.vy = PADDLE_SPEED / FPS;
+    paddle1.vy = PADDLE_SPEED / FPS;
   }
 };
 ```
@@ -749,7 +749,7 @@ window.onkeyup = function(e) {
 };
 ```
 
-Now we have control.
+Now we should have proper start and stop control of ```paddle1``` using the up and down arrows on the keybord.
 
 ## Walls and resetting the ball
 
@@ -868,7 +868,7 @@ var gameLoop = function() {
     elements[i].draw();
   }
   ai(paddle2);
-
+  
   // game rules
   if (ball.right() > canvas.width) {
     ball.x = 117;
@@ -916,7 +916,7 @@ var Element = function(x, y, width, height, vx, vy) {
   elements.push(this);
 };
 Element.prototype.draw = function() {
-  ctr.fillRect(this.x, this.y, this.width, this.height);
+  ctx.fillRect(this.x, this.y, this.width, this.height);
 };
 Element.prototype.move = function() {
   for (var i=0; i < elements.length; i++) {
@@ -942,11 +942,22 @@ Element.prototype.move = function() {
   this.x += this.vx;
   this.y += this.vy;
 };
-
+Element.prototype.left = function() {
+    return this.x;
+};
+Element.prototype.right = function() {
+    return this.x + this.width;
+};
+Element.prototype.top = function() {
+    return this.y;
+};
+Element.prototype.bottom = function() {
+    return this.y + this.height;
+};
 
 // instantiate moving game elements
 var paddle1 = new Element(5, 65, 5, 30);
-var paddle2 = new Element(5, 65, 5, 30);
+var paddle2 = new Element(230, 65, 5, 30);
 var ball = new Element(117, 77, 6, 6, -1 * BALL_SPEED / FPS, 0.6 * BALL_SPEED / FPS);
 
 // create top and bottom walls 
@@ -961,7 +972,7 @@ window.onkeydown = function(event) {
   }
   // go down if it was the down key was pressed
   if (event.keyCode === 40) {
-    paddle.vy = PADDLE_SPEED / FPS;
+    paddle1.vy = PADDLE_SPEED / FPS;
   }
 };
 window.onkeyup = function(e) {
@@ -987,6 +998,8 @@ var gameLoop = function() {
     elements[i].move();
     elements[i].draw();
   }
+  
+  ai(paddle2);
   // game rules
   if (ball.right() > canvas.width) {
     ball.x = 117;
