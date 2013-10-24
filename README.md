@@ -824,25 +824,25 @@ b = y - mx
 b = ball.y - (ball.vy / ball.vx) * ball.x
 ```
 
-Now we have a ```b``` and a ```m```. We want to solve for where our paddle should be, which will be our ```y``` value. Our ```x``` will simply be the x value of paddle2 (our right paddle). Put this all together and we see
+Now we have a ```b``` and a ```m```. We want to solve for where our paddle should be, which will be our ```y``` value. Our ```x``` will simply be the x value of our paddle (our right paddle). Put this all together and we see
 
 ```javascript
-y = m * paddle2.x + b
+y = m * paddle.x + b
 ```
 
 ```javascript
-y = (ball.vy / ball.vx) * paddle2.x + (ball.y - (ball.vy / ball.vx) * ball.x)
+y = (ball.vy / ball.vx) * paddle.x + (ball.y - (ball.vy / ball.vx) * ball.x)
 ```
 
 If we simplify this, and call ```y``` our prediction we get a nice (less than 80 character wide) solution.
 
 ```javascript
-var prediction = (ball.vy / ball.vx) * (paddle2.x - ball.x) + ball.y;
+var prediction = (ball.vy / ball.vx) * (paddle.x - ball.x) + ball.y;
 ```
 
 Keep in mind that this doesn't account for the walls. A lot of the time, the prediction will outside the range of the feild, but in practice, I find it still does a great job of telling the paddle to move up or down.
 
-Now every frame we want to tell our paddle to move up, down, or stay in place. Lets say we want the ball to hit somewhere in the middle third of our paddle. Our ai function should look like so.
+Now every frame we want to tell our paddle to move up, down, or stay in place. Lets say we want the ball to hit somewhere in the middle third of our paddle. Our ai function should look like so
 
 ```javascript
 var ai = function(paddle) {
@@ -881,7 +881,7 @@ var gameLoop = function() {
 setInterval(gameLoop, 1000 / FPS);
 ```
 
-If all goes well you should have a working computer player to play against.
+If all goes well you should have a working computer player to play against. _Note that I've made the ```ai``` function accept a paddle so that you can use this for both ```paddle1``` and ```paddle2```. Try having two AI play eachother, it's pretty fun._
 
 ## Afterword
 
