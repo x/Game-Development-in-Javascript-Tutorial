@@ -491,6 +491,7 @@ If all goes well you should have a working computer player to play against. _Not
 You should now have a fully functional JavaScript Pong game. Hopefully you've been testing as you were writing, if not, feel free to reference the finished code below. The purpose of this exercise is to teach you JavaScript. If you want to create canvas games in the future, I highly recommend __not__ doing it from scratch like we did with this. There are some great game development libraries our there such as [enchant.js](http://enchantjs.com/) and great physics engines like [box2d.js](http://box2d-js.sourceforge.net/) which will handle all the boilerplate code for you.
 
 If you would like to get a little more out of the project, here are some ideas for additions...
+
 * Random starting ```vy``` and ```vx``` for the ball.
 * A score board in HTML that updates.
 * A win condition after a certain number of points.
