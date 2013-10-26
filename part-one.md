@@ -273,7 +273,7 @@ var canvas = document.getElementById('screen');
 var ctx = canvas.getContext('2d');
 ```
 
-Whats returned by getContext is a context object. This object is filled with functions that we can use for drawing. All of these methods take (x,y) coordinates defined with (0,0) in the top-left corner, positive-y going down, and positive-x going to the right. The units are measured in "pixles" that are defined by the context. Lets draw a rectangle.
+Whats returned by getContext is a context object. This object is filled with functions that we can use for drawing. All of these methods take (x,y) coordinates defined with (0,0) in the top-left corner, positive-y going down, and positive-x going to the right. The units are measured in "pixels" that are defined by the context. Lets draw a rectangle.
 
 First lets define a fill-style, the rules governing things like the color of what ever we're going to draw. Lets make the fill-style red.
 
