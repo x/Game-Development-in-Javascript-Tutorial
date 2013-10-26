@@ -412,7 +412,7 @@ _For this part of the lesson, delete everything in your old animate.js file and 
 
 In object oriented programming with classes, a class is a construct used to define a distinct type and an object usually refers to an instance of a class. JavaScript is slightly different in that it's a prototype based language. Instead of objects being instances of classes, objects are just clones of other objects which they call their prototype.
 
-This allows for a lot of flexibility that normal object oriented languages don't offer, but it also has created a lot of confusion. The _"class oriented"_ way of creating objects in JavaScript is to use the ```new``` operator. When the ```new``` operator is used on a function, it clones that function's prototype into new object, applies the function, and then returns the object. We can use the ```new``` operator to mimic a class based language by treading the function as a constructor and assign class methods to the functions prototype.
+This allows for a lot of flexibility that normal object oriented languages don't offer, but it also has created a lot of confusion. The _"class oriented"_ way of creating objects in JavaScript is to use the ```new``` operator. When the ```new``` operator is used on a function, it clones that function's prototype into a new object, applies the function, and then returns the object. We can use the ```new``` operator to mimic a class based language by treating the function as a constructor and assign class methods to the functions prototype.
 
 For example, if we wanted to create a Car class we could do...
 
@@ -420,7 +420,7 @@ For example, if we wanted to create a Car class we could do...
 var Car = function(color) {
   this.color = color;
 };
-Cat.prototype.describe = function() {
+Car.prototype.describe = function() {
   alert('This is a ' + this.color + ' car.');
 }
 ```
@@ -429,15 +429,15 @@ Then to use the class...
 
 ```javascript
 redCar = new Car('red');
-recCar.describe(); // alerts "this is a red car."
+redCar.describe(); // alerts "this is a red car."
 ```
 
-For our pong game, we're going to create a _"class"_ for game elements. Our elements will maintain their size dimensions, positions, have a method for drawing themselves, move themselves, and, with the help of a global elements container, be able to detect collision with other elements.
+For our pong game, we're going to create a _"class"_ for game elements. Our elements will maintain their size dimensions, positions, have a method for drawing themselves, move themselves, and, with the help of a global elements container, be able to detect collisions with other elements.
 
 For simplicity sake we'll add a few restrictions.
 * All elements will be rectangles.
-* All elements will check collision against all other elements (instead a set of "near by" elements).
-* When an elements collides with another element, it reverses it's velocity (bounces).
+* All elements will check for collisions against all other elements (instead of a set of "nearby" elements).
+* When an element collides with another element, it reverses it's velocity (bounces).
 
 Lets get started.
 
@@ -481,7 +481,7 @@ In our Element prototype we'll add a draw function that uses them.
 
 ```javascript
 Element.prototype.draw = function() {
-  ctr.fillRect(this.x, this.y, this.width, this.height);
+  ctx.fillRect(this.x, this.y, this.width, this.height);
 };
 ```
 
@@ -493,7 +493,7 @@ var paddle2 = new Element(5, 65, 5, 30);
 var ball = new Element(117, 77, 6, 6);
 ```
 
-Now if we load our screen we should just see two paddles facing eachother and not much else.
+Now if we load our screen we should just see two paddles facing each other and not much else.
 
 ## Moving
 
@@ -507,7 +507,7 @@ var PADDLE_SPEED = 100;
 var BALL_SPEED = 100;
 ```
 
-_Note that ```FPS``` is a rate of game updates per second, while ```PADDLE_SPEED``` and ```BALL_SPEED``` are a displacement constant of pixles per second._
+_Note that ```FPS``` is a rate of game updates per second, while ```PADDLE_SPEED``` and ```BALL_SPEED``` are a displacement constant of pixels per second._
 
 Now lets add our movement.
 
@@ -561,7 +561,7 @@ var Element = function(x, y, width, height, vx, vy) {
   elements.push(this);
 };
 Element.prototype.draw = function() {
-  ctr.fillRect(this.x, this.y, this.width, this.height);
+  ctx.fillRect(this.x, this.y, this.width, this.height);
 };
 Element.prototype.move = function() {
   this.x += this.vx / FPS;
@@ -725,7 +725,7 @@ window.onkeydown = function() {
 
 As you can see, on the keydown event we somehow figure out if it was the up key or the down key and then change paddle1's y-velocity accordingly.
 
-The way we detirming which key is being pressed is by the event object that the onkeydown listener passes to the callback. This object has a property called ```keyCode``` which defines the key pressed. Every key on the keyboard has a unique keyCode. The up keycode is ```38``` and the down keycode is ```40```.
+The way we determine which key is being pressed is by the event object that the onkeydown listener passes to the callback. This object has a property called ```keyCode``` which defines the key pressed. Every key on the keyboard has a unique keyCode. The up keycode is ```38``` and the down keycode is ```40```.
 
 ```javascript
 window.onkeydown = function(event) {
@@ -794,9 +794,9 @@ _At this point, if you wanted, you could probably figure out how to add control 
 
 ## AI for Player Two
 
-Now for the fun stuff. Lets make a simple AI to control Player two. The AI will issue three states, move up, move down, and don't move. It's goal will be to move to the point at which it thinks the ball will arrive.
+Now for the fun stuff. Lets make a simple AI to control Player Two. The AI will issue three states, move up, move down, and don't move. It's goal will be to move to the point at which it thinks the ball will arrive.
 
-The way we're going to do this is by knowing the ball's x, y, vx, and vy, create a line representing it's path, and come up with the intersection with our paddle. Lets recall high school algabra.
+The way we're going to do this is by knowing the ball's x, y, vx, and vy, create a line representing it's path, and come up with the intersection with our paddle. Lets recall high school algebra.
 
 The slope-intercept formula for a line is
 
@@ -840,7 +840,7 @@ If we simplify this, and call ```y``` our prediction we get a nice (less than 80
 var prediction = (ball.vy / ball.vx) * (paddle.x - ball.x) + ball.y;
 ```
 
-Keep in mind that this doesn't account for the walls. A lot of the time, the prediction will outside the range of the feild, but in practice, I find it still does a great job of telling the paddle to move up or down.
+Keep in mind that this doesn't account for the walls. A lot of the time, the prediction will be outside the range of the field, but in practice, I find it still does a great job of telling the paddle to move up or down.
 
 Now every frame we want to tell our paddle to move up, down, or stay in place. Lets say we want the ball to hit somewhere in the middle third of our paddle. Our ai function should look like so
 
