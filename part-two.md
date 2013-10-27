@@ -91,7 +91,7 @@ Now lets instantiate a couple elements relevant to our pong game.
 
 ```javascript
 var paddle1 = new Element(5, 65, 5, 30);
-var paddle2 = new Element(5, 65, 5, 30);
+var paddle2 = new Element(230, 65, 5, 30);
 var ball = new Element(117, 77, 6, 6);
 ```
 
