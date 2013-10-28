@@ -41,7 +41,7 @@ For simplicity sake we'll add a few restrictions.
 * All elements will check for collisions against all other elements (instead of a set of "nearby" elements).
 * When an element collides with another element, it reverses it's velocity (bounces).
 
-Lets get started:
+Let's get started:
 
 ```javascript
 var Element = function(x, y, width, height, vx, vy) {
@@ -87,7 +87,7 @@ Element.prototype.draw = function() {
 };
 ```
 
-Now lets instantiate a couple elements relevant to our pong game:
+Now let's instantiate a couple elements relevant to our pong game:
 
 ```javascript
 var paddle1 = new Element(5, 65, 5, 30);
@@ -111,7 +111,7 @@ var BALL_SPEED = 100;
 
 _Note that ```FPS``` is a rate of game updates per second, while ```PADDLE_SPEED``` and ```BALL_SPEED``` are a displacement constant of pixels per second._
 
-Now lets add our movement:
+Now let's add our movement:
 
 ```javascript
 Element.prototype.move = function() {
@@ -213,7 +213,7 @@ Element.prototype.bottom = function() {
 };
 ```
 
-Lets preface this with something. Real game collision detection is hard. We have a huge advantage in our pong game:
+Let's preface this with something. Real game collision detection is hard. We have a huge advantage in our pong game:
 1. There are only two axis.
 2. Everything is a rectangle.
 3. We don't have enough elements that looping through all of them is a problem.
@@ -357,7 +357,7 @@ Now we should have proper start and stop control of ```paddle1``` using the up a
 
 ## Walls and resetting the ball
 
-Now is a good time to add the walls. Ideally, you should treat walls differently from game elements, but our goal here is to be simple, so lets just add two new elements with no velocity to represent our walls:
+Now is a good time to add the walls. Ideally, you should treat walls differently from game elements, but our goal here is to be simple, so let's just add two new elements with no velocity to represent our walls:
 
 ```javascript
 // create top and bottom walls 
@@ -365,13 +365,13 @@ var topWall = new Element( 0, 0, 240, 1);
 var bottomWall = new Element(0, 159, 240, 1);
 ```
 
-Now lets use them, lets change the ball to move at an angle.
+Now let's use them, let's change the ball to move at an angle.
 
 ```javascript
 var ball = new Element(117, 77, 6, 6, -1 * BALL_SPEED / FPS, 0.6 * BALL_SPEED / FPS);
 ```
 
-Lastly, lets add some game rules to the game loop. When we see the ball pass one of the paddles, we reset it to it's start point:
+Lastly, let's add some game rules to the game loop. When we see the ball pass one of the paddles, we reset it to it's start point:
 
 ```javascript
 var gameLoop = function() {
@@ -398,9 +398,9 @@ _At this point, if you wanted, you could probably figure out how to add control 
 
 ## AI for Player Two
 
-Now for the fun stuff. Lets make a simple AI to control Player Two. The AI will issue three states, move up, move down, and don't move. It's goal will be to move to the point at which it thinks the ball will arrive.
+Now for the fun stuff. Let's make a simple AI to control Player Two. The AI will issue three states, move up, move down, and don't move. It's goal will be to move to the point at which it thinks the ball will arrive.
 
-The way we're going to do this is by knowing the ball's x, y, vx, and vy, create a line representing it's path, and come up with the intersection with our paddle. Lets recall high school algebra.
+The way we're going to do this is by knowing the ball's x, y, vx, and vy, create a line representing it's path, and come up with the intersection with our paddle. Let's recall high school algebra.
 
 The slope-intercept formula for a line is:
 
@@ -446,7 +446,7 @@ var prediction = (ball.vy / ball.vx) * (paddle.x - ball.x) + ball.y;
 
 Keep in mind that this doesn't account for the walls. A lot of the time, the prediction will be outside the range of the field, but in practice, I find it still does a great job of telling the paddle to move up or down.
 
-Now every frame we want to tell our paddle to move up, down, or stay in place. Lets say we want the ball to hit somewhere in the middle third of our paddle. Our ai function should look like so:
+Now every frame we want to tell our paddle to move up, down, or stay in place. Let's say we want the ball to hit somewhere in the middle third of our paddle. Our ai function should look like so:
 
 ```javascript
 var ai = function(paddle) {
