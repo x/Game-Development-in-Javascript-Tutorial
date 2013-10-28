@@ -1,6 +1,6 @@
 # Part One: JavaScript, Canvas, and Basic Animation
 
-## Intro to JavaScript
+# Intro to JavaScript
 
 JavaScript is a _lightweight_, _dynamic_, _weakly-typed_ language. It features _prototype-based objects_, _first-class functions_, and _asynchronous event handling_.
 
@@ -41,7 +41,7 @@ The function takes a word, loops through half of the list and compares it to the
 
 For the most part this code looks something like C or Java, the only really weird thing is the ```!==``` which is equivalent to what you normally see ```!=```. If this were checking equality we'd use ```===``` instead of ```==```. This is a minor detail about how JavaScript handles equality, for now just accept it.
 
-Look at the first line of the function...
+Look at the first line of the function:
 
 ```javascript
 var length = word.length;
@@ -180,7 +180,7 @@ console.log("hello");
 
 This is the correct version of our function from before. It will say "hello" immediately and then five seconds later say "world".
 
-Imagine we wanted to say "hello" after five seconds and then "world" five seconds after that. An incorrect way to do this would be...
+Imagine we wanted to say "hello" after five seconds and then "world" five seconds after that. An incorrect way to do this would be:
 
 ```javascript
 setTimeout(function(){
@@ -241,7 +241,7 @@ sayHello(5000, function(){
 ```
 This is a much more modular way of structuring our events because now we can plug and play them in any order, or easily make things happen between them.
 
-One last thing that you need to understand about the event queue is that it only runs one thing at a time. Consider the following code...
+One last thing that you need to understand about the event queue is that it only runs one thing at a time. Consider the following code:
 
 ```javascript
 setTimeout(function(){
