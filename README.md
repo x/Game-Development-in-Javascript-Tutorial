@@ -1,4 +1,4 @@
-This is repo is the source code to an introduction to game development in JavaScript. It's goal is to teach basics of JavaScript (part one) and apply that knowlege to building a simple pong game (part two). It targets developers who have little to no exposure to JavaScript, but understand basic programming.
+osm projectsThis is repo is the source code to an introduction to game development in JavaScript. It's goal is to teach basics of JavaScript (part one) and apply that knowlege to building a simple pong game (part two). It targets developers who have little to no exposure to JavaScript, but understand basic programming.
 
 The tutorial part has been split into two md files, [Part One](part-one.md) and [Part Two](part-two.md).
 
